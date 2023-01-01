@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { useState } from "react";
 import { createContext } from "react";
 
@@ -6,9 +7,20 @@ export const LoginContext = createContext();
 
 //! 2-) Providing
 
-const LoginProvider = () => {
+const LoginProvider = ({ children }) => {
   const [user, setUser] = useState({ email: "", password: "" });
-  return <div>LoginProvider</div>;
+
+  const values = { user, setUser };
+
+  return (
+    <LoginContext.Provider value={values}>{children}</LoginContext.Provider>
+  );
+};
+
+//! 3-) Consuming Custom Hook
+
+export const useLoginContext = () => {
+  return useContext(LoginContext);
 };
 
 export default LoginProvider;
